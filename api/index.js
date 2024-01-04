@@ -26,6 +26,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage })
 
 app.post("/upload", upload.single("file"), async (req, res) => {
+    const result = await 
     const user = await UserModel.create({ name: req.body.name, image: req.file.filename })
     res.status(200).json({ status: "success", message: "user with image created successfully", user })
 })
