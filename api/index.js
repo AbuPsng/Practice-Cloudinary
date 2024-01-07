@@ -6,13 +6,13 @@ import dotenv from "dotenv"
 import path from "path"
 import UserModel from "./models/userModel.js"
 import sharp from "sharp"
-dotenv.config()
+import { uploadOnCloudinanry } from "./cloudinary.js"
 
+dotenv.config()
 const app = express()
 
 app.use(cors())
 app.use(express.json())
-app.use(express.static("public"))
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -26,8 +26,8 @@ const storage = multer.diskStorage({
 const upload = multer({ storage })
 
 app.post("/upload", upload.single("file"), async (req, res) => {
-    const result = await 
-    const user = await UserModel.create({ name: req.body.name, image: req.file.filename })
+    const result = await uploadOnCloudinanry(req.file.path)
+    const user = await UserModel.create({ name: req.body.name, image: result })
     res.status(200).json({ status: "success", message: "user with image created successfully", user })
 })
 
