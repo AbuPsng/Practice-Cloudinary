@@ -38,17 +38,19 @@ function App() {
   }, [])
 
   return (
-    <div>
-      <form onSubmit={handleUpload}>
-        <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
-        <input type="file" onChange={(e) => setFile(e.target.files[0])} />
-        <button type="submit">Upload</button>
+    <div className="h-screen flex flex-col justify-center gap-y-28   px-10 bg-gradient-to-b from-indigo-400 to-teal-100">
+      <form className="w-full flex flex-col gap-4 " onSubmit={handleUpload}>
+        <input type="text" className=" rounded-full border-indigo-500 outline-indigo-500 border-solid py-2 px-4 text-sm " placeholder="Enter your name" value={name} onChange={(e) => setName(e.target.value)} />
+
+        <input type="file" className="py-1 px-4 border-solid  border-2 rounded-full hover:bg-indigo-300" onChange={(e) => setFile(e.target.files[0])} />
+
+        <button className="py-1 px-4 border-solid border-2 w-28 rounded-full hover:bg-indigo-300" type="submit">Upload</button>
       </form>
-      <div>
+      <div className="flex gap-x-4 w-1/3 ">
         {
           users && users.map(user => (
-            <div key={user._id}>
-              <img style={{ "height": "200px", "width": "200px", "objectFit": "cover" }} src={`${user.image}`} alt={`${user.name}`} />
+            <div key={user._id} className="">
+              <img className="bg-black " src={`${user.image}`} alt={`${user.name}`} />
               <h1 style={{ "color": "black" }}>{user.name} </h1>
             </div>
           ))

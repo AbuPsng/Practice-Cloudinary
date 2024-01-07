@@ -1,7 +1,9 @@
 import { v2 as cloudinary } from "cloudinary"
-// Load environment variables synchronously
 import dotenv from 'dotenv'
 import fs from "fs"
+
+
+// Load environment variables synchronously
 
 dotenv.config({ path: '.env' })
 
@@ -12,18 +14,20 @@ cloudinary.config({
 })
 
 export const uploadOnCloudinanry = async (localFilePath) => {
+    console.log(localFilePath)
     try {
-        if (!localFilePath) return null
+        const default_Image = "public/default/default_images.jpg"
         //**upload file on cloudinary
-        const response = await cloudinary.uploader.upload(localFilePath, {
+        const response = await cloudinary.uploader.upload(localFilePath || default_Image, {
             resource_type: "auto"
         })
         console.log(`file is upload and its url is ${response.url}`)
-        fs.unlinkSync(localFilePath)
+        if (localFilePath) fs.unlinkSync(localFilePath)
+        console.log(response)
         return response.url
     } catch (error) {
         // if(there is an error then it will deleted using unlinkSync)
-        fs.unlinkSync(localFilePath)
+        if (localFilePath) fs.unlinkSync(localFilePath)
         return error
     }
 }
